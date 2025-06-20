@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const port = process.env.port || 8080;
+const cors = require("cors")
 const body_parser = require("body-parser");
 const vendorRoutes = require("./routes/vendorRoutes");
 const firmRoutes = require("./routes/firmRoutes.js");
@@ -17,6 +18,8 @@ mongoose
   .then(() => console.log("Mongodb is Connected "))
   .catch((err) => console.log(err));
 
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(body_parser.json());
 app.use("/vendor", vendorRoutes);
 app.use("/firm",firmRoutes);
@@ -24,6 +27,7 @@ app.use("/product",productRoutes);
 app.use("uploads/",express.static('/uploads'));
 app.use("/",(req,res)=>{
   res.send("<h1>Welcome to HungerHub..❤️")
+
 })
 
 
